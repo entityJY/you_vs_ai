@@ -9,12 +9,12 @@
             <h1>Human or AI | By Joshua Yamada</h1>
             <h2>Select whether the following statement is written by an AI or by a real person:</h2>
             <div id="question"></div>
-            <h3 id="question_counter"></h3>
+            <!-- <h3 id="question_counter"></h3> -->
             <div>
               <button id="ai">AI</button>
               <button id="human">Human</button>
             </div>
-            <!-- <button id="next">Next Question</button> -->
+            <button id="end">End Quiz</button>
         </div>
     </body>
   <script>
@@ -70,9 +70,11 @@
 
     const questionElement = document.getElementById("question");
     const optionsElement = document.getElementById("options");
-    const questionCounterElement = document.getElementById("question_counter");
+    // const questionCounterElement = document.getElementById("question_counter");
     const aiButton = document.getElementById("ai");
     const humanButton = document.getElementById("human");
+
+    document.getElementById("end").addEventListener("click", endQuiz);
 
     aiButton.addEventListener("click", selectAnswer);
     humanButton.addEventListener("click", selectAnswer);
@@ -86,17 +88,7 @@
     }
 
     function showQuestion() {
-      if (question_counter >= 10) {
-        document.getElementById("main_body").innerHTML = `
-          <h1>Quiz Finished!</h1>
-          <p>Score: ${correct_counter}/10</p>
-        `;
-        question_counter = 0;
-        correct_counter = 0;
-        return;
-      }
-
-      questionCounterElement.innerText = `Question ${question_counter + 1}/10`;
+      // questionCounterElement.innerText = `Question ${question_counter + 1}/10`;
 
       chose_ai_statement = getRandomInt(2);
 
@@ -121,6 +113,15 @@
       question_counter += 1;
 
       showQuestion();
+    }
+
+    function endQuiz(e) {
+      document.getElementById("main_body").innerHTML = `
+        <h1>Quiz Finished!</h1>
+        <p>Score: ${correct_counter}/${question_counter}</p>
+      `;
+      question_counter = 0;
+      correct_counter = 0;
     }
 
     showQuestion();
